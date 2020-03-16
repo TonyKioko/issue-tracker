@@ -10,34 +10,22 @@
           alt="Vuetify Logo"
           class="shrink mr-2"
           contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
+         
           width="40"
         />
 
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
+  
       </div>
 
       <v-spacer></v-spacer>
 
       <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
       >
-        <span class="mr-2">
-          <v-btn small @click="logout" v-if="loggedIn">
+        <span class="mr-2" v-if="loggedIn">
+          <v-btn small @click="logout" >
             Log out
           </v-btn>
         </span>
-        <v-icon>mdi-open-in-new</v-icon>
       </v-btn>
     </v-app-bar>
 
@@ -49,7 +37,7 @@
 
 <script>
 // import HelloWorld from './components/HelloWorld';
-
+import {mapGetters,mapActions} from 'vuex'
 export default {
   name: 'App',
 
@@ -57,8 +45,41 @@ export default {
     // HelloWorld,
   },
 
-  data: () => ({
-    //
-  }),
+  data(){
+    return {
+      // loggedIn:false
+    }
+  },
+  created() {
+
+    this.checkUserState();
+    // if(localStorage.getItem('token')){
+    //   this.loggedIn = true
+    // }
+  },
+  computed: {
+    ...mapGetters({
+      loggedIn:'user/loggedIn'
+    })
+    // loggedIn(){
+    //   return this.$store.getters['user/loggedIn']
+    // }
+  },
+  methods: {
+    ...mapActions({
+        logoutUser:'user/logoutUser',
+        checkUserState:'user/setLoggedInState'
+    }),
+    logout(){
+      // localStorage.removeItem('token');
+      // this.$store.dispatch('user/logoutUser')
+      this.logoutUser()
+      .then(()=> {
+        this.$router.push({
+          name:'login'
+        })
+      })
+    }
+  },
 };
 </script>
