@@ -31,7 +31,9 @@ return [
     /*
      * Matches the request origin. `[*]` allows all origins.
      */
-    'allowed_origins' => [env('FRONT_APP'),'*'],
+    // 'allowed_origins' => [env('FRONT_APP'),'*'],
+    'allowed_origins' => [env('FRONT_APP')],
+
 
     // 'allowed_origins' => ['*'],
 

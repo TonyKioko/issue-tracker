@@ -6,6 +6,9 @@ import Register from '../components/Auth/Register.vue'
 import Dashboard from '../components/Pages/Dashboard.vue'
 import Middlewares from '../middlewares'
 
+import ForgotPassword from '../components/Auth/ForgotPassword.vue'
+import ResetPassword from '../components/Auth/ResetPassword.vue'
+
 
 
 
@@ -33,6 +36,24 @@ const routes = [
       middleware: [Middlewares.guest]
 
     }
+  },
+  {
+    path: '/forgot-password',
+    name: 'forgotPassword',
+    component: ForgotPassword,
+    // meta: {
+    //   middleware: [Middlewares.guest]
+
+    // }
+  },
+  {
+    path: '/reset-password',
+    name: 'resetPassword',
+    component: ResetPassword,
+    // meta: {
+    //   middleware: [Middlewares.guest]
+
+    // }
   },
   {
     path: '/dashboard',
