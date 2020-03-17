@@ -31,9 +31,9 @@ return [
     /*
      * Matches the request origin. `[*]` allows all origins.
      */
-    // 'allowed_origins' => ['http://localhost:8080'],
+    'allowed_origins' => [env('FRONT_APP'),'*'],
 
-    'allowed_origins' => ['*'],
+    // 'allowed_origins' => ['*'],
 
 
     /*
