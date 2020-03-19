@@ -1,10 +1,10 @@
-import axios from 'axios';
+import axios from '../../axios';
 
 export default {
     loginUser(ctx,payload){
         return new Promise((resolve,reject)=>{
             axios
-          .post("http://localhost:8000/api/login", payload)
+          .post("login", payload)
           .then((response) => {
               if(response.data.access_token){
 
@@ -43,7 +43,7 @@ export default {
     forgotPassword(ctx,payload){
         return new Promise((resolve,reject)=>{
             axios
-          .post("http://localhost:8000/api/forgot-password", payload)
+          .post("forgot-password", payload)
           .then(response => {
               resolve(response)
           })
@@ -59,7 +59,7 @@ export default {
     resetPassword(ctx,payload){
         return new Promise((resolve,reject)=>{
             axios
-          .post("http://localhost:8000/api/reset-password", payload)
+          .post("reset-password", payload)
           .then(response => {
               resolve(response)
           })
