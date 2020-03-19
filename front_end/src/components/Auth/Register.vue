@@ -31,15 +31,13 @@
         </v-col>
       </v-row>
     </v-container>
-    <v-snackbar v-model="snackbar.show">
-      {{ snackbar.text }}
-      <v-btn color="pink" text @click="snackbar.show = false">Close</v-btn>
-    </v-snackbar>
+    
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import { mapActions } from "vuex";
 export default {
   name: "Register",
   data() {
@@ -50,33 +48,41 @@ export default {
         email: "",
         password: ""
       },
-      snackbar:{
-          show:false,
-          text:'Success'
-      }
+      
     };
   },
   methods: {
+    ...mapActions({
+      addNotification: "application/addNotification"
+    }),
     registerUser() {
       if (this.$refs.registerForm.validate()) {
         axios
           .post("http://localhost:8000/api/register", this.newUser)
           .then(response => {
-              if(response.data && response.data.success){
-                this.snackbar = {
-                  show:true,
-                    text:'Failed'
-              }    
-              this.$router.push({
-                  name:'login'
-              })          }
+            if (response.data && response.data.success) {
+              console.log('registering',response.data)
+              this.addNotification({
+                show: true,
+                text: "Success"
+              })
+              .then(()=>{
+                this.$router.push({
+                  name: "login"
+                });
+              })
+              //   this.snackbar = {
+              //     show:true,
+              //       text:'Failed'
+              // }
+            }
             console.log(response);
           })
           .catch(() => {
-              this.snackbar = {
-                  show:true,
-                    text:'Failed'
-              }
+            this.addNotification({
+                show: true,
+                text: "Failed"
+              })
           });
         // console.log(this.newUser)
         // console.log({event,$form: this.$refs.registerForm.validate()})

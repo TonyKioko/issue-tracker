@@ -24,7 +24,7 @@ const actions = {
         return new Promise((resolve,reject)=>{
             axios
           .post("http://localhost:8000/api/login", payload)
-          .then(response => {
+          .then((response) => {
               if(response.data.access_token){
 
                   localStorage.setItem("token", response.data);

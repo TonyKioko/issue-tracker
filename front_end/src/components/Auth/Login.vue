@@ -47,15 +47,28 @@ export default {
   },
   methods: {
     ...mapActions({
-      login:'user/loginUser'
+      login:'user/loginUser',
+      addNotification: "application/addNotification"
+
     }),
     loginUser() {
       if (this.$refs.loginForm.validate()) {
         // this.$store.dispatch('user/loginUser',this.user)
-        this.login(this.user)
-        .then((response) => {
-          console.log(response)
-          this.$router.push({name:'dashboard'})
+        this.login({...this.user})
+        .then(() => {
+           this.addNotification({
+                show: true,
+                text:'Welcome'
+              })
+              .then(()=>{
+                this.$router.push({name:'dashboard'})
+              })
+        })
+        .catch(()=>{
+           this.addNotification({
+                show: true,
+                text:'Login Failed'
+              })
         })
       }
     }

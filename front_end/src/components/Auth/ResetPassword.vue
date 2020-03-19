@@ -34,10 +34,10 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-snackbar v-model="snackbar.show">
+    <!-- <v-snackbar v-model="snackbar.show">
       {{ snackbar.text }}
       <v-btn color="pink" text @click="snackbar.show = false">Close</v-btn>
-    </v-snackbar>
+    </v-snackbar> -->
   </v-container>
 </template>
 
@@ -63,7 +63,9 @@ export default {
   },
   methods: {
     ...mapActions({
-      resetPassword: "user/resetPassword"
+      resetPassword: "user/resetPassword",
+      addNotification: "application/addNotification"
+
     }),
     onResetPassword() {
       if (this.$refs.resetPasswordForm.validate()) {
@@ -74,17 +76,24 @@ export default {
         this.resetPassword({ ...this.user, token })
           .then(response => {
             console.log(response);
-            this.$router.push({ name: "login" });
-            this.snackbar = {
+            this.addNotification({
               show: true,
-              text: "Password reset successfully"
-            };
+                text:"Password reset successfully"
+              })
+              .then(()=>{
+
+                this.$router.push({ name: "login" });
+              })
+            // this.snackbar = {
+            //   show: true,
+            //   text: "Password reset successfully"
+            // };
           })
           .catch(() => {
-            this.snackbar = {
-              show: true,
-              text: "Password reset failed"
-            };
+            this.addNotification({
+                show: true,
+                text: "Password reset failed"
+              })
           });
       }
     }
