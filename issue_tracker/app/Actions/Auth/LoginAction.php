@@ -14,8 +14,8 @@ class LoginAction{
 
         $data = [
                 'grant_type' => 'password',
-                'client_id' => $passportGrantClient->id,
-                'client_secret' => $passportGrantClient->secret,
+                // 'client_id' => $passportGrantClient->id,
+                // 'client_secret' => $passportGrantClient->secret,
                 'username' => $request['email'],
                 'password' => $request['password'],
                 'scope' => '*',

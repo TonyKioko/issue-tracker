@@ -8,13 +8,17 @@ export default {
           .then((response) => {
               if(response.data.access_token){
 
-                  localStorage.setItem("token", response.data);
+                console.log("access token", response.data.access_token)
+                  localStorage.setItem('token', response.data.access_token);
                   ctx.commit('setLoggedIn',true);
                   resolve(response)
                   console.log(response.data);
               } else {
                 reject(response)
               }
+          })
+          .catch((error) => {
+              reject(error)
           });
         })
         .catch((error) => { 
@@ -61,6 +65,24 @@ export default {
             axios
           .post("reset-password", payload)
           .then(response => {
+              resolve(response)
+          })
+          .catch((error)=>{
+            reject(error)
+          });
+        })
+        .catch((error) => { 
+            console.log(error)
+            // reject (error)
+        })
+    },
+    me(ctx){
+        return new Promise((resolve,reject)=>{
+            axios
+          .get("me")
+          .then(response => {
+              console.log("response data",response.data)
+              ctx.commit('setUserDetails',response.data)
               resolve(response)
           })
           .catch((error)=>{
